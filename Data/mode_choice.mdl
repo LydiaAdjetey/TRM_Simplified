@@ -1,0 +1,66 @@
+model label="Mode Choice" version=1.5
+source destfield=Destination destinations=True idfield=TripID name=Trips origfield=Origin origins=True primary=True type=Survey view=triangle_trips
+source idfield=ID name=Access type=Zonal view=access
+source colindex=RCIndex file="C:\Users\adjetey\OneDrive - University of North Carolina at Chapel Hill\mode choice lab\OneDrive_2025-02-27\Mode Choice Materials\transit_skims_AM.mtx" filelabel="AM Transit" name=Transit rowindex=RCIndex type=Matrix
+source colindex=Destination file="C:\Users\adjetey\OneDrive - University of North Carolina at Chapel Hill\mode choice lab\OneDrive_2025-02-27\Mode Choice Materials\walk_skims_All.mtx" filelabel=Walk name=Walk rowindex=Origin type=Matrix
+source colindex=Destination file="C:\Users\adjetey\OneDrive - University of North Carolina at Chapel Hill\mode choice lab\OneDrive_2025-02-27\Mode Choice Materials\bike_skims_All.mtx" filelabel=Bike name=Bike rowindex=Origin type=Matrix
+source colindex=Destination file="C:\Users\adjetey\OneDrive - University of North Carolina at Chapel Hill\mode choice lab\OneDrive_2025-02-27\Mode Choice Materials\auto_skims_MD.mtx" filelabel="MD Auto" name=Auto rowindex=Origin type=Matrix
+  segvar source=Trips spec=NumericTripType
+  segment id=1 name=HBW
+    term coefficient=-3.43693e-05 name=Time
+    term coefficient=0.2106 name=Transfers
+    term coefficient=7.77521e-08 name=AccessOrig
+    term coefficient=4.02032e-08 name=AccessDest
+    choice source=Trips spec=ModeNumeric
+    alternative id=1 name=SOV
+      data source=Auto spec=TimeMD term=Time
+    alternative asc=-2.19857 id=2 name=HOV
+      data source=Auto spec=TimeMD term=Time
+    alternative asc=-1.29299 id=3 name=Walk
+      data source=Walk spec=Time term=Time
+    alternative asc=-4.57441 id=4 name=Bike
+      data source=Bike spec=Time term=Time
+    alternative asc=-2.43014 id=6 name=Transit
+      data source=Transit spec="Total Time" term=Time
+      data source=Transit spec="Number of Transfers" term=Transfers
+      data source=Access spec=Access_transit_AM_Retail_30 term=AccessOrig
+      data source=Access spec=Access_transit_AM_Retail_30 term=AccessDest type=Destination
+  segment id=2 name=HBO
+    term coefficient=-3.91289e-05 name=Time
+    term coefficient=-0.00156156 name=TimeSB
+    term coefficient=0.216719 name=Transfers
+    term coefficient=6.4272e-08 name=AccessOrig
+    term coefficient=4.85117e-08 name=AccessDest
+    choice source=Trips spec=ModeNumeric
+    alternative id=1 name=SOV
+      data source=Auto spec=TimeMD term=Time
+    alternative asc=0.0755127 id=2 name=HOV
+      data source=Auto spec=TimeMD term=Time
+    alternative asc=-0.105387 id=3 name=Walk
+      data source=Walk spec=Time term=Time
+    alternative asc=-3.44969 id=4 name=Bike
+      data source=Bike spec=Time term=Time
+    alternative asc=-2.74078 id=5 name="School Bus"
+      data source=Auto spec=TimeMD term=TimeSB
+    alternative asc=-1.80692 id=6 name=Transit
+      data source=Transit spec="Total Time" term=Time
+      data source=Transit spec="Number of Transfers" term=Transfers
+      data source=Access spec=Access_transit_AM_Retail_30 term=AccessOrig
+      data source=Access spec=Access_transit_AM_Retail_30 term=AccessDest type=Destination
+  segment id=3 name=NHB
+    term coefficient=-0.0149078 name=Time
+    term coefficient=0.453575 name=Transfers
+    term coefficient=-2.06961e-06 name=AccessOrig
+    term coefficient=0.000510955 name=AccessDest
+    choice source=Trips spec=ModeNumeric
+    alternative id=1 name=SOV
+      data source=Auto spec=TimeMD term=Time
+    alternative asc=-0.210482 id=2 name=HOV
+      data source=Auto spec=TimeMD term=Time
+    alternative asc=-0.653663 id=3 name=Walk
+      data source=Walk spec=Time term=Time
+    alternative asc=-3.79388 id=6 name=Transit
+      data source=Transit spec="Total Time" term=Time
+      data source=Transit spec="Number of Transfers" term=Transfers
+      data source=Access spec=Access_transit_AM_Retail_30 term=AccessOrig
+      data source=Access spec=Access_transit_AM_Retail_30 term=AccessDest type=Destination
